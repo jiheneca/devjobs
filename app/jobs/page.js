@@ -30,7 +30,7 @@ export default async function JobsPage({ searchParams }) {
         select: { applications: true },
       },
     },
-    orderBy: { createdAt: "desc" },
+    orderBy: { id: "desc" },
   }
 
   const jobs = await prisma.job.findMany(filters)

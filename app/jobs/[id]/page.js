@@ -5,8 +5,16 @@ import { notFound } from "next/navigation"
 import ApplyJobForm from "../ApplyJobForm"
 
 export async function generateMetadata({ params }) {
+  const jobId = parseInt(params?.id, 10)
+  if (!jobId) {
+    return {
+      title: "Job Not Found",
+      description: "This job listing could not be found",
+    }
+  }
+
   const job = await prisma.job.findUnique({
-    where: { id: parseInt(params.id) },
+    where: { id: jobId },
     include: { company: { select: { name: true } } },
   })
 
@@ -38,13 +46,18 @@ export async function generateStaticParams() {
 
 export default async function JobDetailPage({ params }) {
   const session = await getServerSession(authOptions)
+  const jobId = parseInt(params?.id, 10)
+
+  if (!jobId) {
+    notFound()
+  }
 
   const job = await prisma.job.findUnique({
-    where: { id: parseInt(params.id) },
+    where: { id: jobId },
     include: {
       company: true,
       applications: {
-        where: session?.user?.id ? { developer: { userId: parseInt(session.user.id) } } : {},
+        where: session?.user?.id ? { developer: { userId: parseInt(session.user.id, 10) } } : {},
       },
     },
   })
