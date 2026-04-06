@@ -40,7 +40,6 @@ export default function CompleteDeveloperProfile() {
     try {
       let imageUrl = null
 
-      // Step 1: upload image to Cloudinary if one was selected
       if (imageFile) {
         const formData = new FormData()
         formData.append("file", imageFile)
@@ -55,7 +54,6 @@ export default function CompleteDeveloperProfile() {
         imageUrl = uploadData.url
       }
 
-      // Step 2: save profile with the Cloudinary URL
       const res = await fetch("/api/complete-profile/developer", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -91,14 +89,12 @@ export default function CompleteDeveloperProfile() {
 
         <form onSubmit={handleSubmit} className="space-y-5">
 
-          {/* Image upload */}
           <div>
             <label className="text-sm font-medium text-gray-700 block mb-2">
               Profile photo
               <span className="ml-1 text-gray-400 font-normal">(optional)</span>
             </label>
             <div className="flex items-center gap-4">
-              {/* Preview */}
               <div className="w-16 h-16 rounded-full border-2 border-dashed border-gray-300 flex items-center justify-center overflow-hidden bg-gray-50 shrink-0">
                 {imagePreview ? (
                   <img src={imagePreview} alt="Preview" className="w-full h-full object-cover" />
@@ -108,7 +104,6 @@ export default function CompleteDeveloperProfile() {
                   </svg>
                 )}
               </div>
-              {/* File input */}
               <label className="cursor-pointer px-4 py-2 border border-gray-300 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition">
                 Choose photo
                 <input
@@ -124,7 +119,6 @@ export default function CompleteDeveloperProfile() {
             </div>
           </div>
 
-          {/* About */}
           <div>
             <label className="text-sm font-medium text-gray-700 block mb-1">
               About you

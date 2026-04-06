@@ -8,6 +8,8 @@ cloudinary.config({
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 })
+// milekher rit les fichiers Les fichiers sont uploadés sur Cloudinary, un service cloud de stockage de médias (images, vidéos, PDFs...).
+// serveur mteei ne stocke pas les fichiers localement, mais les envoie directement à Cloudinary. 
 
 export async function POST(request) {
   const session = await getServerSession(authOptions)
@@ -23,12 +25,10 @@ export async function POST(request) {
     return NextResponse.json({ error: "No file provided" }, { status: 400 })
   }
 
-  // Convert file to base64
   const bytes = await file.arrayBuffer()
   const buffer = Buffer.from(bytes)
   const base64 = `data:${file.type};base64,${buffer.toString("base64")}`
 
-  // Upload to Cloudinary
   let uploadOptions = { folder: "devjobs" }
   if (file.type === "application/pdf") {
     uploadOptions.resource_type = "raw"

@@ -40,7 +40,6 @@ export default async function JobsPage({ searchParams }) {
       <div className="max-w-6xl mx-auto px-4">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">Job Listings</h1>
 
-        {/* Search & Filter */}
         <form className="bg-white p-6 rounded-lg shadow mb-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
@@ -97,7 +96,6 @@ export default async function JobsPage({ searchParams }) {
           </button>
         </form>
 
-        {/* Jobs Grid */}
         <div className="space-y-4">
           {jobs.length === 0 ? (
             <p className="text-gray-500 text-center py-8">No jobs found</p>

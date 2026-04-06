@@ -12,7 +12,6 @@ export default function JobFilters({ initialSearch, initialMinSalary, initialTyp
   const [minSalary, setMinSalary] = useState(initialMinSalary || "")
   const [type, setType] = useState(initialType || "")
 
-  // Build and push updated query string
   const updateParams = useCallback(
     (newValues) => {
       const params = new URLSearchParams(searchParams.toString())
@@ -30,15 +29,13 @@ export default function JobFilters({ initialSearch, initialMinSalary, initialTyp
     [router, pathname, searchParams]
   )
 
-  // Debounce text-based inputs (search & salary)
   useEffect(() => {
     const timeout = setTimeout(() => {
       updateParams({ search, minSalary })
     }, 400)
     return () => clearTimeout(timeout)
-  }, [search, minSalary]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [search, minSalary])
 
-  // Instant update for select
   const handleTypeChange = (e) => {
     const value = e.target.value
     setType(value)
@@ -47,7 +44,6 @@ export default function JobFilters({ initialSearch, initialMinSalary, initialTyp
 
   const handleSalaryChange = (e) => {
     const value = e.target.value
-    // Only allow positive integers
     if (value === "" || (/^\d+$/.test(value) && parseInt(value) >= 0)) {
       setMinSalary(value)
     }

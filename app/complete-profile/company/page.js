@@ -112,7 +112,6 @@ export default function CompleteCompanyProfile() {
             {nameError && <p className="text-red-500 text-xs mt-1">{nameError}</p>}
           </div>
 
-          {/* Logo upload */}
           <div>
             <label className="text-sm font-medium text-gray-700 block mb-2">
               Company logo

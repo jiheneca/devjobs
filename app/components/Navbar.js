@@ -10,18 +10,15 @@ export default function Navbar() {
 
   return (
     <nav className="p-4 bg-black text-white flex justify-between items-center gap-4">
-      {/* Logo/Brand */}
       <div className="font-bold text-lg">
         <Link href="/">DevJobs 🚀</Link>
       </div>
 
-      {/* Main Links */}
       <div className="flex gap-6 items-center flex-1">
       
  
       </div>
 
-      {/* Auth Section */}
       <div className="flex gap-4 items-center">
         {status === "loading" && <p className="text-sm text-gray-300">Loading...</p>}
 

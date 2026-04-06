@@ -1,4 +1,3 @@
-// app/api/auth/set-role/route.js
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "../[...nextauth]/route"
 import { prisma } from "@/app/lib/prisma"

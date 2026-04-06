@@ -1,6 +1,3 @@
-# .github/workflows/deploy.yml
-# GitHub Actions - CI/CD Pipeline
-
 name: CI/CD Pipeline
 
 on:

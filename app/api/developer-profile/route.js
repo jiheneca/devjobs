@@ -38,13 +38,11 @@ export async function POST(request) {
   try {
     const validated = developerProfileSchema.parse({ name, image: imageUrl, about })
 
-    // Update name on User
     await prisma.user.update({
       where: { id: Number(session.user.id) },
       data: { name: validated.name },
     })
 
-    // Upsert developer profile
     const developer = await prisma.developer.upsert({
       where: { userId: Number(session.user.id) },
       update: { image: validated.image || null, about: validated.about || null },

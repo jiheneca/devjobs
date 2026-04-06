@@ -14,7 +14,6 @@ export async function POST(request) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 })
   }
 
-  // ✅ Now receives imageUrl (from Cloudinary) instead of a raw URL typed by user
   const { imageUrl, about } = await request.json()
 
   const developer = await prisma.developer.upsert({

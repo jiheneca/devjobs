@@ -1,6 +1,3 @@
-// lib/prisma.js
-// Client Prisma singleton (évite les connexions multiples)
-
 import { PrismaClient } from '@prisma/client';
 
 const globalForPrisma = globalThis;

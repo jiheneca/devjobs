@@ -72,12 +72,10 @@ export default async function JobDetailPage({ params }) {
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-4xl mx-auto px-4">
 
-        {/* ✅ Fixed back link */}
         <a href="/dashboard/developer/jobs" className="text-blue-600 hover:underline mb-4 block">
           ← Back to Job Listings
         </a>
 
-        {/* Job header */}
         <div className="bg-white p-8 rounded-lg shadow mb-6">
           <div className="flex justify-between items-start mb-6">
             <div className="flex-1">
@@ -100,7 +98,6 @@ export default async function JobDetailPage({ params }) {
             </div>
           </div>
 
-          {/* Description */}
           <div className="border-t pt-6">
             <h3 className="text-lg font-semibold mb-3">Job Description</h3>
             <div className="prose prose-sm max-w-none text-gray-700 whitespace-pre-wrap">
@@ -108,7 +105,6 @@ export default async function JobDetailPage({ params }) {
             </div>
           </div>
 
-          {/* Company description */}
           {job.company.description && (
             <div className="border-t mt-6 pt-6">
               <h3 className="text-lg font-semibold mb-3">About {job.company.name}</h3>
@@ -117,7 +113,6 @@ export default async function JobDetailPage({ params }) {
           )}
         </div>
 
-        {/* Apply form */}
         <div className="mb-6">
           <ApplyJobForm jobId={job.id} hasApplied={hasApplied} />
         </div>

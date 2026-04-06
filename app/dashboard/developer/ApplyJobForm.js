@@ -40,7 +40,6 @@ export default function ApplyJobForm({ jobId, hasApplied }) {
         throw new Error("Please select a CV file")
       }
 
-      // Step 1: Upload PDF to Cloudinary
       const formData = new FormData()
       formData.append("file", cvFile)
 
@@ -50,15 +49,13 @@ export default function ApplyJobForm({ jobId, hasApplied }) {
       })
 
       const uploadData = await uploadRes.json()
-      console.log("Upload result:", uploadData) // debug
-      
+
       if (!uploadRes.ok) {
         throw new Error(uploadData.error || "Failed to upload CV")
       }
 
       const cvUrl = uploadData.url
 
-      // Step 2: Submit application with Cloudinary URL
       const res = await fetch(`/api/jobs/${jobId}/apply`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

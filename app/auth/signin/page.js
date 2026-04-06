@@ -12,7 +12,6 @@ export default function SignInPage() {
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
 
-  // ✅ Redirect after session is ready — same logic as role-selection
   useEffect(() => {
     if (status === "authenticated" && session?.user) {
       if (!session.user.role) {
@@ -45,8 +44,6 @@ export default function SignInPage() {
         return
       }
 
-      // ✅ Don't redirect here — useEffect above handles it
-      // once session updates with the user's role + profileComplete
 
     } catch (err) {
       setError("An unexpected error occurred")

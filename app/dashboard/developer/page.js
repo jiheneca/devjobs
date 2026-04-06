@@ -32,7 +32,6 @@ export default async function DeveloperDashboard({ searchParams }) {
         ],
       }),
       ...(type && { type }),
-      // Fix: salary field must be an Int in Prisma — use Number() and guard against NaN
       ...(minSalary !== null && !isNaN(minSalary) && {
         salary: { gte: minSalary },
       }),
@@ -52,14 +51,12 @@ export default async function DeveloperDashboard({ searchParams }) {
     <div className="space-y-6">
       <h1 className="text-3xl font-bold text-gray-900">Browse Jobs</h1>
 
-      {/* Search & Filter — client component, no submit button needed */}
       <JobFilters
         initialSearch={search}
         initialMinSalary={minSalary ? String(minSalary) : ""}
         initialType={type}
       />
 
-      {/* Jobs Grid */}
       <div className="space-y-4">
         {jobs.length === 0 ? (
           <p className="text-gray-500 text-center py-8">No jobs found</p>

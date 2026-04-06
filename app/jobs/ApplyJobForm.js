@@ -13,7 +13,6 @@ export default function ApplyJobForm({ jobId, hasApplied }) {
   const [error, setError] = useState(null)
   const [success, setSuccess] = useState(null)
 
-  // ✅ All hooks above — conditionals below
   if (hasApplied) {
     return (
       <div className="bg-yellow-50 border border-yellow-200 p-4 rounded-lg">
@@ -51,7 +50,6 @@ export default function ApplyJobForm({ jobId, hasApplied }) {
         throw new Error("Please select a CV file")
       }
 
-      // Step 1: Upload PDF to Cloudinary
       const formData = new FormData()
       formData.append("file", cvFile)
 
@@ -59,9 +57,8 @@ export default function ApplyJobForm({ jobId, hasApplied }) {
         method: "POST",
         body: formData,
       })
-
+     // ici en attend une réponse de l'API d'upload qui contient l'URL du fichier CV uploadé sur Cloudinary. Si l'upload échoue, une erreur est levée.
       const uploadData = await uploadRes.json()
-      console.log("Upload result:", uploadData) // debug
       
       if (!uploadRes.ok) {
         throw new Error(uploadData.error || "Failed to upload CV")
@@ -69,7 +66,6 @@ export default function ApplyJobForm({ jobId, hasApplied }) {
 
       const cvUrl = uploadData.url
 
-      // Step 2: Submit application with Cloudinary URL
       const res = await fetch(`/api/jobs/${jobId}/apply`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

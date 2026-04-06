@@ -18,7 +18,6 @@ export async function POST(request, { params }) {
   }
 
   try {
-    // Check if developer profile exists
     const developer = await prisma.developer.findUnique({
       where: { userId: parseInt(session.user.id) },
     })
@@ -27,7 +26,6 @@ export async function POST(request, { params }) {
       return NextResponse.json({ error: "Complete your profile first" }, { status: 400 })
     }
 
-    // Check if job exists
     const job = await prisma.job.findUnique({
       where: { id: jobId },
     })
@@ -36,7 +34,6 @@ export async function POST(request, { params }) {
       return NextResponse.json({ error: "Job not found" }, { status: 404 })
     }
 
-    // Check if already applied
     const existing = await prisma.application.findUnique({
       where: {
         developerId_jobId: {
@@ -53,7 +50,6 @@ export async function POST(request, { params }) {
       )
     }
 
-    // Create application
     await prisma.application.create({
       data: {
         developerId: developer.id,

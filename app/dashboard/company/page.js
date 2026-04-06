@@ -42,7 +42,6 @@ export default async function CompanyDashboard() {
 
   return (
     <div className="space-y-8">
-      {/* Statistics */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="bg-white p-6 rounded-lg shadow">
           <h3 className="text-lg font-semibold text-gray-900">Total Jobs</h3>
@@ -60,13 +59,11 @@ export default async function CompanyDashboard() {
         </div>
       </div>
 
-      {/* Create Job Form */}
       <div className="bg-white p-6 rounded-lg shadow">
         <h2 className="text-xl font-bold mb-4">Create New Job</h2>
         <JobForm action={createJob} />
       </div>
 
-      {/* Jobs Table */}
       <div className="bg-white p-6 rounded-lg shadow">
         <h2 className="text-xl font-bold mb-4">Your Jobs</h2>
         <JobsTable jobs={jobs} onDelete={deleteJob} onUpdate={updateJob} />

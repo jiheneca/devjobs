@@ -2,7 +2,6 @@ export default function CompanyDashboardLayout({ children }) {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="flex">
-        {/* Sidebar */}
         <div className="w-64 bg-white shadow-lg">
           <div className="p-6">
             <h2 className="text-xl font-bold text-gray-900">Company Dashboard</h2>
@@ -23,7 +22,6 @@ export default function CompanyDashboardLayout({ children }) {
           </nav>
         </div>
 
-        {/* Main content */}
         <div className="flex-1 p-8">
           {children}
         </div>

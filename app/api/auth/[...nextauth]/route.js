@@ -9,7 +9,7 @@ export const authOptions = {
   adapter: PrismaAdapter(prisma),
   session: {
     strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60,
+    maxAge: 30 * 24 * 60 * 60,// // session expire après 30 jours
   },
   providers: [
     CredentialsProvider({
@@ -40,14 +40,14 @@ export const authOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
+  // callback jwt est appelé à chaque fois qu'un token JWT est créé ou mis à jour. Il permet d'ajouter 
+  // des informations personnalisées au token, comme l'ID de l'utilisateur, son rôle, et si son profil est complet.
   callbacks: {
     async jwt({ token, user, account, profile }) {
-      // Step 1: first login via credentials — attach basic info to token
       if (user) {
         token.id = user.id
       }
 
-      // Step 2: first login via Google — upsert user in DB
       if (account?.provider === "google" && profile?.email) {
         let dbUser = await prisma.user.findUnique({ where: { email: profile.email } })
 
@@ -63,9 +63,10 @@ export const authOptions = {
 
         token.id = dbUser.id
       }
-
-      // Step 3: ✅ Always sync everything from DB — runs on every request
-      // This ensures role + profileComplete are always fresh
+  // Cette partie s'exécute TOUJOURS (credentials + google),
+  //  elle vérifie si le token contient un ID d'utilisateur, w baad tlawej fi la base de données pour récupérer les infos de l'utilisateur (email, nom, rôle) et les ajoute au token.
+  // w base sur le rôle de l'utilisateur, elle vérifie si le profil est complet (pour les développeurs, ça vérifie s'ils ont un profil développeur, pour les entreprises, ça vérifie s'ils ont un profil entreprise) et ajoute cette info au token aussi.
+  
       if (token.id) {
         const dbUser = await prisma.user.findUnique({
           where: { id: Number(token.id) },
@@ -81,7 +82,7 @@ export const authOptions = {
           token.role = dbUser.role ?? null
 
           if (dbUser.role === "DEVELOPER") {
-            token.profileComplete = !!dbUser.developer
+            token.profileComplete = !!dbUser.developer // !! permet de convertir en boolean, true si le profil existe, false sinon
           } else if (dbUser.role === "COMPANY") {
             token.profileComplete = !!dbUser.company
           } else {

@@ -6,11 +6,9 @@ const prisma = new PrismaClient()
 async function main() {
   console.log('🌱 Seeding database...')
 
-  // Hash passwords
   const hashedPassword1 = await bcrypt.hash('password123', 10)
   const hashedPassword2 = await bcrypt.hash('password123', 10)
 
-  // Create developer users
   const devUser1 = await prisma.user.create({
     data: {
       name: 'John Doe',
@@ -29,7 +27,6 @@ async function main() {
     }
   })
 
-  // Create company users
   const companyUser1 = await prisma.user.create({
     data: {
       name: 'Tech Corp',
@@ -48,7 +45,6 @@ async function main() {
     }
   })
 
-  // Create developers
   const developer1 = await prisma.developer.create({
     data: {
       image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
@@ -65,7 +61,6 @@ async function main() {
     }
   })
 
-  // Create companies
   const company1 = await prisma.company.create({
     data: {
       name: 'Tech Corp',
@@ -84,7 +79,6 @@ async function main() {
     }
   })
 
-  // Create jobs
   const job1 = await prisma.job.create({
     data: {
       title: 'Senior Full Stack Developer',
@@ -129,7 +123,6 @@ async function main() {
     }
   })
 
-  // Create applications
   await prisma.application.create({
     data: {
       developerId: developer1.id,

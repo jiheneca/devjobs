@@ -8,7 +8,6 @@ export default function CompanyProfileForm({ company }) {
   const [name, setName] = useState(company?.name || "")
   const [description, setDescription] = useState(company?.description || "")
   const [logoFile, setLogoFile] = useState(null)
-  // ✅ Start with existing logo from DB
   const [logoPreview, setLogoPreview] = useState(company?.logo || null)
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -28,7 +27,7 @@ export default function CompanyProfileForm({ company }) {
     setLoading(true)
 
     try {
-      let logoUrl = logoPreview // ✅ Keep existing logo if no new file
+      let logoUrl = logoPreview
 
       if (logoFile) {
         const formData = new FormData()
@@ -89,7 +88,6 @@ export default function CompanyProfileForm({ company }) {
           />
         </div>
 
-        {/* Logo upload */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Company Logo

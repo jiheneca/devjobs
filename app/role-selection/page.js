@@ -9,7 +9,7 @@ export default function RoleSelectionPage() {
   const { data: session, status, update } = useSession()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
-  const [pendingRole, setPendingRole] = useState(null) // ✅ track which role was just set
+  const [pendingRole, setPendingRole] = useState(null)
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -18,7 +18,6 @@ export default function RoleSelectionPage() {
     }
 
     if (status === "authenticated" && session?.user?.role) {
-      // ✅ Role is now in session — redirect to correct complete-profile page
       if (!session.user.profileComplete) {
         if (session.user.role === "DEVELOPER") router.replace("/complete-profile/developer")
         else if (session.user.role === "COMPANY") router.replace("/complete-profile/company")
@@ -28,7 +27,6 @@ export default function RoleSelectionPage() {
       }
     }
   }, [status, session])
-  // ↑ This now fires whenever session changes — including AFTER update() refreshes it
 
   if (status === "loading") {
     return (
@@ -57,15 +55,12 @@ export default function RoleSelectionPage() {
         throw new Error(data.error || "Failed to set role")
       }
 
-      // ✅ Just call update() — the useEffect above will handle the redirect
-      // once the session actually refreshes with the new role
       await update()
 
     } catch (err) {
       setError(err.message)
       setLoading(false)
     }
-    // ✅ Don't set loading false here — keep spinner until redirect happens
   }
 
   return (

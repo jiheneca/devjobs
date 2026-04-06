@@ -7,10 +7,8 @@ export async function POST(request) {
   try {
     const body = await request.json()
 
-    // Validate input with Zod
     const validatedData = registerSchema.parse(body)
 
-    // Check if user already exists
     const existingUser = await prisma.user.findUnique({
       where: { email: validatedData.email },
     })
@@ -22,10 +20,9 @@ export async function POST(request) {
       )
     }
 
-    // Hash password
+
     const hashedPassword = await bcrypt.hash(validatedData.password, 10)
 
-    // Create user in database
     const user = await prisma.user.create({
       data: {
         name: validatedData.name,
@@ -36,7 +33,6 @@ export async function POST(request) {
       },
     })
 
-    // Return success (don't expose password)
     return NextResponse.json(
       { 
         message: "User created successfully",

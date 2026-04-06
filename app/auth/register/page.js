@@ -48,7 +48,6 @@ export default function RegisterPage() {
       const data = await response.json()
 
       if (!response.ok) {
-      // ✅ After
 if (data.details && Array.isArray(data.details)) {
   const fieldErrors = {}
   data.details.forEach((error) => {
@@ -202,7 +201,6 @@ if (data.details && Array.isArray(data.details)) {
           </div>
 
           <div className="mt-6">
-            {/* ✅ callbackUrl sends Google users to role-selection if no role yet */}
             <button
               onClick={() => signIn("google", { callbackUrl: "/role-selection" })}
               className="w-full flex justify-center items-center py-2.5 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"

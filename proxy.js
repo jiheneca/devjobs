@@ -7,7 +7,6 @@ export async function proxy(req) {
 
   const { pathname } = req.nextUrl
 
-  // Public routes — always allow
   if (
     pathname.startsWith("/auth") ||
     pathname.startsWith("/role-selection") ||
@@ -17,7 +16,9 @@ export async function proxy(req) {
     return NextResponse.next()
   }
 
-  // Not logged in — redirect to sign in
+  if (!token) {
+    return NextResponse.redirect(new URL("/auth/signin", req.url))
+  }
   if (!token) {
     return NextResponse.redirect(new URL("/auth/signin", req.url))
   }

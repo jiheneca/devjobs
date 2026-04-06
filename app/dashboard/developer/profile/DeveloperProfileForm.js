@@ -8,7 +8,6 @@ export default function DeveloperProfileForm({ developer }) {
   const [name, setName] = useState(developer?.user?.name || "")
   const [about, setAbout] = useState(developer?.about || "")
   const [imageFile, setImageFile] = useState(null)
-  // ✅ Start with existing image from DB
   const [imagePreview, setImagePreview] = useState(developer?.image || null)
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -18,7 +17,6 @@ export default function DeveloperProfileForm({ developer }) {
     const file = e.target.files[0]
     if (!file) return
     setImageFile(file)
-    // ✅ Show new image preview immediately
     setImagePreview(URL.createObjectURL(file))
   }
 
@@ -29,9 +27,8 @@ export default function DeveloperProfileForm({ developer }) {
     setLoading(true)
 
     try {
-      let imageUrl = imagePreview // ✅ Keep existing image if no new file
+      let imageUrl = imagePreview
 
-      // Upload new image to Cloudinary if selected
       if (imageFile) {
         const formData = new FormData()
         formData.append("file", imageFile)
@@ -46,7 +43,6 @@ export default function DeveloperProfileForm({ developer }) {
         imageUrl = uploadData.url
       }
 
-      // ✅ Fixed API route + sends imageUrl not image
       const res = await fetch("/api/developer-profile", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -82,7 +78,6 @@ export default function DeveloperProfileForm({ developer }) {
 
       <form onSubmit={handleSubmit} className="space-y-5">
 
-        {/* Name */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
           <input
@@ -93,12 +88,10 @@ export default function DeveloperProfileForm({ developer }) {
           />
         </div>
 
-        {/* Profile image upload */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">Profile photo</label>
           <div className="flex items-center gap-4">
 
-            {/* ✅ Shows existing image OR new preview */}
             <div className="w-16 h-16 rounded-full border-2 border-dashed border-gray-300 flex items-center justify-center overflow-hidden bg-gray-50 shrink-0">
               {imagePreview ? (
                 <img
@@ -129,7 +122,6 @@ export default function DeveloperProfileForm({ developer }) {
           </div>
         </div>
 
-        {/* About */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">About</label>
           <textarea
