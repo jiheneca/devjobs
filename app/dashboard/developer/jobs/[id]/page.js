@@ -5,7 +5,9 @@ import { notFound } from "next/navigation"
 import ApplyJobForm from "../../ApplyJobForm"
 
 export async function generateMetadata({ params }) {
-  const jobId = parseInt(params?.id, 10)
+  const { id } = await params  // ✅ await params correctement
+  
+  const jobId = parseInt(id, 10)  // ✅ utiliser id, pas params?.id
   if (!jobId) {
     return {
       title: "Job Not Found",
@@ -45,8 +47,10 @@ export async function generateStaticParams() {
 }
 
 export default async function JobDetailPage({ params }) {
+  const { id } = await params  // ✅ await params ici aussi
+
   const session = await getServerSession(authOptions)
-  const jobId = parseInt(params?.id, 10)
+  const jobId = parseInt(id, 10)  // ✅ utiliser id, pas params?.id
 
   if (!jobId) {
     notFound()
